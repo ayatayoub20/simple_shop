@@ -1,98 +1,200 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🛍️ NestJS Shop API  
+A fully modular and production-ready backend built with **NestJS**, **Prisma ORM**, **ImageKit**, and **Multer**, providing a clean and scalable architecture for e-commerce applications.  
+This project includes user management, authentication, product handling with image upload, order processing, and transaction logging.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+---
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Features
 
-## Description
+### 🔐 Authentication & Authorization
+- JWT authentication  
+- Login / Register endpoints  
+- Secure password hashing  
+- Role-based access support 
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 👥 Users Module
+- Create / update / delete users  
+- Get user profile & user list  
+- Prisma-powered database access  
 
-## Project setup
+### 🛒 Products Module
+- Create / edit / delete products  
+- Upload product images using Multer  
+- Automatic upload to **ImageKit** CDN  
+- Cleanup interceptor to remove unused files  
+- Stores URLs & metadata in database
 
+### 📦 Orders Module
+- Create user orders  
+- View order history  
+- Order status & processing logic
+
+### 💳 Transactions Module
+- Logs all financial/order-related operations  
+- Tracks purchase activity  
+- Useful for analytics & admin dashboards
+
+### 🗂 File Upload & Handling
+- **Multer** for file parsing  
+- **ImageKit** for cloud upload  
+- Custom `CleanupFileInterceptor` to delete temporary local files  
+- File module fully abstracted with service + provider pattern  
+
+### 🧰 Shared Infrastructure
+- Unified API response interceptor  
+- Global exception filters:
+  - Prisma errors  
+  - Zod validation errors  
+  - HTTP exceptions  
+  - Fallback uncaught exception handler  
+- Database module using PrismaClient  
+- Clean modular architecture  
+- DTO + Validation with Zod Pipes  
+
+---
+
+## 🛠 Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| **NestJS** | Main application framework |
+| **Prisma ORM** | Database access layer |
+| **MySQL** | Database (via Prisma) |
+| **Multer** | File upload middleware |
+| **ImageKit** | Media storage & CDN |
+| **Zod** | Schema validation |
+| **TypeScript** | Type safety |
+| **RxJS / Interceptors** | Response manipulation |
+
+
+## 📦 Installation & Setup
+
+### Clone the project
 ```bash
-$ npm install
+git clone https://github.com/ayatayoub20/simple_shop.git
+cd simple_shop
 ```
 
-## Compile and run the project
-
+### Install dependencies
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+### Set up your `.env` file
+```
+DATABASE_URL="your_database_url"
+IMAGEKIT_PUBLIC_KEY="your_key"
+IMAGEKIT_PRIVATE_KEY="your_key"
+IMAGEKIT_URL_ENDPOINT="your_endpoint"
+JWT_SECRET="your_secret"
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+### Run database migrations
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npx prisma migrate dev
+npx prisma generate
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Start the server
+```bash
+npm run start:dev
+```
 
-## Resources
+The API will run at:  
+👉 `http://localhost:3000/api`
 
-Check out a few resources that may come in handy when working with NestJS:
+---
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🧪 API Overview
 
-## Support
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/register` | Create new user |
+| POST | `/auth/login` | Login & get JWT token |
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Users
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/user` | Get list of users |
+| GET | `/user/:id` | Get single user |
+| PATCH | `/user/:id` | Update user |
+| DELETE | `/user/:id` | Soft delete |
 
-## Stay in touch
+### Products
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/product` | Create product (with image upload) |
+| GET | `/product` | List products |
+| GET | `/product/:id` | Product details |
+| PATCH | `/product/:id` | Update product |
+| DELETE | `/product/:id` | Soft delete / remove |
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Orders
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/order` | Create order |
+| GET | `/order` | Get user orders |
+| GET | `/order/:id` | Order details |
 
-## License
+### Transactions
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/transaction` | List all transactions |
+| GET | `/transaction/:id` | Transaction details |
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 🖼️ Image Upload Flow (Multer + ImageKit)
+
+1. User uploads an image via Multer  
+2. File is sent to ImageKit via `imagekit.provider`  
+3. After successful upload:
+   - Local file is deleted using `CleanupFileInterceptor`  
+4. URL from ImageKit is stored in DB via Prisma  
+5. Frontend uses fast CDN-optimized image
+
+---
+
+## ❗ Error Handling
+
+Unified error responses with filters for:
+
+- PrismaClientKnownRequestError  
+- Prisma validation  
+- Zod validation  
+- HTTP exceptions  
+- Internal server errors  
+
+Example:
+```json
+{
+  "success": false,
+  "message": "Validation failed",
+  "fields": [
+    { "field": "price", "message": "Expected number" }
+  ]
+}
+```
+
+---
+
+## ⭐ Future Improvements
+- Add admin roles  
+- Add categories for products  
+- Add cart module  
+- Payment integration  
+- Email notifications  
+- Swagger API documentation  
+
+---
+
+## 👩‍💻 Author
+**Ayat Ayoub**  
+GitHub: https://github.com/ayatayoub20  
+---
+
+## 🌟 Final Notes
+This project showcases strong backend architecture principles using **NestJS**, including modular design, separation of concerns, validation, exception handling, file-upload pipelines, and database abstraction with Prisma.
+
+It serves as an excellent portfolio project demonstrating real-world backend development skills.
